@@ -1,0 +1,214 @@
+query GetPlants {
+    plantCollection(limit: 10, skip: 2) {
+        items {
+            plantName
+            image {
+                url
+            }
+            slug
+            sys {
+                id
+            }
+        }
+    }
+}
+
+
+query GetPlantsInfinite($limit: Int!, $skip: Int!) {
+    plantCollection(limit: $limit, skip: $skip) {
+        total
+        items {
+            plantName
+            image {
+                url
+            }
+            slug
+            category {
+                title
+            }
+            sys {
+                id
+            }
+        }
+    }
+}
+
+query GetCategoriesTitle {
+    categoryCollection {
+        items {
+            title
+            slug
+        }
+    }
+}
+
+query GetPlantsByCategory($category: String!) {
+    plantCollection(where: {category: {slug: $category}}) {
+        items {
+            plantName
+            image {
+                url
+            }
+            slug
+            category {
+                title
+                color
+                slug
+            }
+            sys {
+                id
+            }
+        }
+    }
+}
+
+query GetPlantsByCategoryInfinite($category: String!, $limit: Int!, $skip: Int!) {
+    plantCollection(where: {category: {slug: $category}}, limit: $limit, skip: $skip) {
+        total
+        items {
+            plantName
+            image {
+                url
+            }
+            slug
+            category {
+                title
+                color
+                slug
+            }
+            sys {
+                id
+            }
+        }
+    }
+}
+
+query CountPlantsByCategory($category: String!) {
+    plantCollection(where: {category: {slug: $category}}) {
+        total
+    }
+}
+
+query GetCategoryBySlug($slug: String!) {
+    categoryCollection(where: {slug: $slug}) {
+        items {
+            title
+            color
+            slug
+            categoryDescription
+            sys {
+                id
+            }
+        }
+    }
+}
+
+query GetCategoryById($id: String!) {
+    category(id: $id) {
+        title
+        color
+        slug
+        categoryDescription
+        sys {
+            id
+        }
+    }
+}
+
+
+query GetPlantsSlugs {
+    plantCollection {
+        items {
+            slug
+        }
+    }
+}
+
+query GetPlantBySlug($slug: String!) {
+    plantCollection(where: {slug: $slug}) {
+        items {
+            plantName
+            image {
+                url
+            }
+            slug
+            description{
+                json
+            }
+            category {
+                title
+                color
+                slug
+            }
+            sys {
+                id
+            }
+            author{
+                fullName
+                sys {
+                    id
+                }
+            }
+        }
+    }
+}
+
+query GetAuthorById($id: String!) {
+    author(id: $id) {
+        fullName
+        photo {
+            url
+            title
+            height
+            width
+        }
+        biography
+        sys {
+            id
+        }
+        twitter
+        linkedIn
+        linkedFrom {
+            plantCollection {
+                items {
+                    slug
+                    plantName
+                    sys {
+                        id
+                    }
+                }
+            }
+        }
+    }
+}
+
+query GetAuthorIds {
+    authorCollection {
+        items {
+            sys {
+                id
+            }
+        }
+    }
+}
+
+query GetPlantsByAuthor($id: String) {
+    plantCollection(where: {author: {sys: {id: $id}}}) {
+        items {
+            plantName
+            slug
+            sys {
+                id
+            }
+        }
+    }
+}
+
+query GetAuthorImageById($id: String!) {
+    author(id: $id) {
+        photo {
+            url
+            title
+        }
+    }
+}

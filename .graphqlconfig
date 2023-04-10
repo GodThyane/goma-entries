@@ -1,0 +1,15 @@
+{
+  "name": "Untitled GraphQL Schema",
+  "schemaPath": "./graphql/generated/schema.graphql",
+  "extensions": {
+    "endpoints": {
+      "Default GraphQL Endpoint": {
+        "url": "https://graphql.contentful.com/content/v1/spaces/jcu0yamxms9o?access_token=IS_QUdLxlrBQwy9UtV-rf4scv8053R9CTAesKiZraXs",
+        "headers": {
+          "user-agent": "JS GraphQL"
+        },
+        "introspect": false
+      }
+    }
+  }
+}
