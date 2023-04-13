@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from '@/components/ui/Navbar';
 import { Category } from '@/graphql/generated/schema';
+import SideMenu from '@/components/ui/SideMenu';
 
 interface Props {
    children: React.ReactNode;
@@ -11,7 +12,7 @@ const MainLayout = ({ children, categories }: Props) => {
    return (
       <>
          <Navbar categories={categories} />
-         {/*<SideMenu/>*/}
+         <SideMenu categories={categories} />
          <main
             style={{
                margin: '80px auto',

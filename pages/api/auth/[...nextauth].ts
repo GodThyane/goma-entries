@@ -4,10 +4,10 @@ import Credentials from 'next-auth/providers/credentials';
 import { signIn, signUp } from '@/api/firebaseApi';
 
 export const authOptions: NextAuthOptions = {
-   /*pages: {
+   pages: {
       signIn: '/auth/login',
       newUser: ' /auth/register',
-   },*/
+   },
    session: {
       maxAge: 2592000, // 30 days
       strategy: 'jwt',
@@ -56,8 +56,9 @@ export const authOptions: NextAuthOptions = {
                case 'oauth':
                   const email = user?.email || '';
                   const password = '$';
+                  const name = email.split('@')[0].split('.')[0];
 
-                  const { data, error } = await signUp(email, password);
+                  const { data, error } = await signUp(email, password, name);
 
                   if (error) {
                      return;

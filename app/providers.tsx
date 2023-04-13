@@ -6,6 +6,7 @@ import apolloClient from '@/graphql/apolloClient';
 import ThemeProviderCustom from '@/app/theme-provider-custom';
 import { SessionProvider } from 'next-auth/react';
 import { SWRConfig } from 'swr';
+import UIProvider from '@/context/ui/UIProvider';
 
 type Variables = { [key: string]: any };
 
@@ -29,7 +30,9 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
                   fetcher,
                }}
             >
-               <ThemeProviderCustom>{children}</ThemeProviderCustom>
+               <UIProvider>
+                  <ThemeProviderCustom>{children}</ThemeProviderCustom>
+               </UIProvider>
             </SWRConfig>
          </ApolloProvider>
       </SessionProvider>

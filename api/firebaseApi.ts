@@ -1,13 +1,16 @@
 import axios from 'axios';
 import { ISignInResponse, ISignUpResponse } from '@/model/firebase.model';
+import { db } from '@/firebase';
+import { addDoc, collection, doc, getDoc } from 'firebase/firestore';
 
 export const signUp: (
    email: string,
-   password: string
+   password: string,
+   name: string
 ) => Promise<{
    data: ISignUpResponse | null;
    error: { code: number; message: string } | null;
-}> = async (email: string, password: string) => {
+}> = async (email: string, password: string, name: string) => {
    const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.NEXT_PUBLIC_FIREBASE_API_KEY}`;
 
    try {
@@ -17,11 +20,24 @@ export const signUp: (
          returnSecureToken: true,
       });
 
+      const user = await addUser({
+         name,
+         email,
+         id: data.localId,
+      });
+
+      console.log({ user });
+
       return {
-         data,
+         data: {
+            ...data,
+            userId: user.id,
+         },
          error: null,
       };
    } catch (e) {
+      console.log({ e });
+
       if (axios.isAxiosError(e)) {
          return {
             data: null,
@@ -58,8 +74,13 @@ export const signIn: (
          returnSecureToken: true,
       });
 
+      const { data: user } = await getUser(data.localId);
+
       return {
-         data,
+         data: {
+            ...data,
+            userId: user?.id,
+         },
          error: null,
       };
    } catch (e) {
@@ -72,6 +93,43 @@ export const signIn: (
             },
          };
       }
+      return {
+         data: null,
+         error: {
+            code: 500,
+            message: 'Internal Server Error',
+         },
+      };
+   }
+};
+
+export const addUser = async (user: any) => {
+   try {
+      const docRef = await addDoc(collection(db, 'users'), user);
+      return {
+         id: docRef.id,
+         error: null,
+      };
+   } catch (e) {
+      return {
+         id: null,
+         error: {
+            code: 500,
+            message: 'Internal Server Error',
+         },
+      };
+   }
+};
+
+export const getUser = async (id: string) => {
+   try {
+      const docRef = await getDoc(doc(db, 'users', id));
+      console.log({ docRef });
+      return {
+         data: docRef,
+         error: null,
+      };
+   } catch (e) {
       return {
          data: null,
          error: {
