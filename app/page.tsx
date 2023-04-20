@@ -1,9 +1,5 @@
-import Home from '@/app/components/Home';
+import { redirect } from 'next/navigation';
 
-export default async function HomePage() {
-   return (
-      <>
-         <Home />
-      </>
-   );
+export default async function Page() {
+   redirect('/main');
 }

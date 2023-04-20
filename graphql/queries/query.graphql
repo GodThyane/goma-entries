@@ -212,3 +212,30 @@ query GetAuthorImageById($id: String!) {
         }
     }
 }
+
+query GetAuthorHandleAndIds {
+    authorCollection {
+        items {
+            handle
+            sys {
+                id
+            }
+        }
+    }
+}
+
+query GetPlantsWithAuthors {
+    plantCollection {
+        items {
+            sys {
+                id
+                firstPublishedAt
+            }
+            author {
+                sys {
+                    id
+                }
+            }
+        }
+    }
+}

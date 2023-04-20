@@ -7,6 +7,7 @@ import ThemeProviderCustom from '@/app/theme-provider-custom';
 import { SessionProvider } from 'next-auth/react';
 import { SWRConfig } from 'swr';
 import UIProvider from '@/context/ui/UIProvider';
+import AuthProvider from '@/context/auth/AuthProvider';
 
 type Variables = { [key: string]: any };
 
@@ -30,9 +31,11 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
                   fetcher,
                }}
             >
-               <UIProvider>
-                  <ThemeProviderCustom>{children}</ThemeProviderCustom>
-               </UIProvider>
+               <AuthProvider>
+                  <UIProvider>
+                     <ThemeProviderCustom>{children}</ThemeProviderCustom>
+                  </UIProvider>
+               </AuthProvider>
             </SWRConfig>
          </ApolloProvider>
       </SessionProvider>

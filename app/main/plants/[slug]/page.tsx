@@ -2,9 +2,9 @@ import React from 'react';
 import {
    getPlantBySlug,
    getPlantSlugs,
-} from '@/app/plants/services/plants.service';
+} from '@/app/main/plants/services/plants.service';
 import { redirect } from 'next/navigation';
-import PlantSlug from '@/app/plants/[slug]/PlantSlug';
+import PlantSlug from '@/app/main/plants/[slug]/PlantSlug';
 import { Plant } from '@/graphql/generated/schema';
 
 interface Props {
@@ -26,7 +26,7 @@ const PlantSlugPage = async ({ params: { slug } }: { params: Props }) => {
    const count = data?.plantCollection?.items.length ?? 0;
 
    if (count === 0) {
-      redirect('/');
+      redirect('/main');
    }
 
    const plant = data?.plantCollection?.items[0] as Plant;

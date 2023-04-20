@@ -21,7 +21,7 @@ export function Hero({ plantName, slug, image, className }: HeroProps) {
                />
             </div>
             <div className="text-container absolute">
-               <Link href={`/entry/${slug}`}>
+               <Link href={`/main/entry/${slug}`}>
                   <Box title={`Go to ${plantName}`}>
                      <Typography
                         variant="h1"

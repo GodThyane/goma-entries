@@ -1,7 +1,7 @@
 import React from 'react';
 import { redirect } from 'next/navigation';
-import CategorySlug from '@/app/category/[slug]/CategorySlug';
-import { getCategoryBySlug } from '@/app/category/services/category.slug.service';
+import CategorySlug from '@/app/main/category/[slug]/CategorySlug';
+import { getCategoryBySlug } from '@/app/main/category/services/category.slug.service';
 import { getCategoriesTitle } from '@/app/services/general.service';
 
 interface Props {
@@ -23,7 +23,7 @@ const CategorySlugPage = async ({ params: { slug } }: { params: Props }) => {
    const count = data?.categoryCollection?.items.length ?? 0;
 
    if (count === 0) {
-      redirect('/');
+      redirect('/main');
    }
 
    const { categoryDescription, title } =

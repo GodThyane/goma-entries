@@ -24,7 +24,7 @@ const PlantCard = ({ plant }: Props) => {
       //xs: 12, sm: 6, md: 4, lg: 3
       <Grid item xs={12} sm={6} md={4} lg={3}>
          <Card>
-            <Link href={`/plants/${plant.slug}`} passHref prefetch={false}>
+            <Link href={`/main/plants/${plant.slug}`} passHref prefetch={false}>
                <CardActionArea>
                   <CardMedia
                      component="img"

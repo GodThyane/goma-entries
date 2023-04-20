@@ -1,24 +1,26 @@
 import { createContext } from 'react';
-import { ISignInResponse } from '@/model/firebase.model';
 
 interface ContextProps {
    isLoggedIn: boolean;
-   user?: any /*TODO*/;
+   user?: UserModel;
 
    // Methods
    login: (
       email: string,
       password: string
    ) => Promise<{
-      data: ISignInResponse | null;
+      data: UserModel | null;
       error: { code: number; message: string } | null;
    }>;
    logout: () => void;
-   /*registerUser: (
+   register: (
       email: string,
       password: string,
       name: string
-   ) => Promise<{ hasError: boolean; message?: string }>;*/
+   ) => Promise<{
+      data: UserModel | null;
+      error: { code: number; message: string } | null;
+   }>;
 }
 
 export const AuthContext = createContext({} as ContextProps);

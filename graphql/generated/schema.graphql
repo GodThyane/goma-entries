@@ -120,7 +120,7 @@ enum AssetOrder {
 }
 
 """
-plant entry creator [See type definition](https://app.contentful.com/spaces/jcu0yamxms9o/content_types/author)
+Plant entry creator [See type definition](https://app.contentful.com/spaces/jcu0yamxms9o/content_types/author)
 """
 type Author implements Entry {
   biography(locale: String): String

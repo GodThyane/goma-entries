@@ -1,14 +1,6 @@
 import './globals.css';
 import React from 'react';
 import Providers from '@/app/providers';
-import MainLayout from '@/components/layouts/MainLayout';
-import {
-   Category,
-   GetCategoriesTitleDocument,
-   GetCategoriesTitleQuery,
-} from '@/graphql/generated/schema';
-import { ApolloQueryResult } from '@apollo/client';
-import apolloClient from '@/graphql/apolloClient';
 
 export const metadata = {
    title: 'Create Next App',
@@ -20,26 +12,10 @@ export default async function RootLayout({
 }: {
    children: React.ReactNode;
 }) {
-   const { data }: ApolloQueryResult<GetCategoriesTitleQuery | undefined> =
-      await apolloClient.query({
-         query: GetCategoriesTitleDocument,
-         context: {
-            fetchOptions: {
-               next: { revalidate: 86400 },
-            },
-         },
-      });
-
-   const categories = data?.categoryCollection?.items;
-
    return (
-      <html lang="en">
+      <html lang="es">
          <body>
-            <Providers>
-               <MainLayout categories={categories as Category[]}>
-                  {children}
-               </MainLayout>
-            </Providers>
+            <Providers>{children}</Providers>
          </body>
       </html>
    );

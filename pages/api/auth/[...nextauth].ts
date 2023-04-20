@@ -1,7 +1,7 @@
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 import Credentials from 'next-auth/providers/credentials';
-import { signIn, signUp } from '@/api/firebaseApi';
+import { oauthSignUp, signIn } from '@/api/firebaseApi';
 
 export const authOptions: NextAuthOptions = {
    pages: {
@@ -55,10 +55,9 @@ export const authOptions: NextAuthOptions = {
             switch (account.type) {
                case 'oauth':
                   const email = user?.email || '';
-                  const password = '$';
                   const name = email.split('@')[0].split('.')[0];
 
-                  const { data, error } = await signUp(email, password, name);
+                  const { data, error } = await oauthSignUp(email, name);
 
                   if (error) {
                      return;

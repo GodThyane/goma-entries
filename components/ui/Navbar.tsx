@@ -82,7 +82,7 @@ const Navbar = ({ categories }: Props) => {
                {categories.map((category) => (
                   <NavbarButtonCategory
                      key={category.slug}
-                     url={`/category/${category.slug}`}
+                     url={`/main/category/${category.slug}`}
                      text={category.title!}
                   />
                ))}

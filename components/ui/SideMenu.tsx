@@ -24,6 +24,7 @@ import {
    LocalFloristOutlined,
    LoginOutlined,
    VpnKeyOutlined,
+   AppRegistrationOutlined,
 } from '@mui/icons-material';
 import SearchOutlined from '@mui/icons-material/SearchOutlined';
 import { usePathname, useRouter } from 'next/navigation';
@@ -77,6 +78,11 @@ const SideMenu = ({ categories }: Props) => {
       [isLoggedIn, user]
    );
 
+   const logoutUser = () => {
+      logout();
+      toggleSideMenu();
+   };
+
    return (
       <Drawer
          open={isMenuOpen}
@@ -124,7 +130,9 @@ const SideMenu = ({ categories }: Props) => {
                   {categories.map((category) => (
                      <ListItemButton
                         key={category.slug}
-                        onClick={() => navigateTo(`/category/${category.slug}`)}
+                        onClick={() =>
+                           navigateTo(`/main/category/${category.slug}`)
+                        }
                      >
                         <ListItemIcon>
                            <LocalFloristOutlined />
@@ -135,16 +143,28 @@ const SideMenu = ({ categories }: Props) => {
                </Box>
 
                {!isLoggedIn ? (
-                  <ListItemButton
-                     onClick={() => navigateTo(`/auth/login?p=${pathName}`)}
-                  >
-                     <ListItemIcon>
-                        <VpnKeyOutlined />
-                     </ListItemIcon>
-                     <ListItemText primary={'Ingresar'} />
-                  </ListItemButton>
+                  <>
+                     <ListItemButton
+                        onClick={() => navigateTo(`/auth/login?p=${pathName}`)}
+                     >
+                        <ListItemIcon>
+                           <VpnKeyOutlined />
+                        </ListItemIcon>
+                        <ListItemText primary={'Ingresar'} />
+                     </ListItemButton>
+                     <ListItemButton
+                        onClick={() =>
+                           navigateTo(`/auth/register?p=${pathName}`)
+                        }
+                     >
+                        <ListItemIcon>
+                           <AppRegistrationOutlined />
+                        </ListItemIcon>
+                        <ListItemText primary={'Registrarse'} />
+                     </ListItemButton>
+                  </>
                ) : (
-                  <ListItemButton onClick={logout}>
+                  <ListItemButton onClick={logoutUser}>
                      <ListItemIcon>
                         <LoginOutlined />
                      </ListItemIcon>

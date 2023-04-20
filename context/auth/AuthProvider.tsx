@@ -3,11 +3,11 @@
 import React, { useReducer, useMemo, useEffect } from 'react';
 import { AuthContext, authReducer } from './';
 import { useSession, signIn as signWithNext, signOut } from 'next-auth/react';
-import { signIn } from '@/api/firebaseApi';
+import { signIn, signUp } from '@/api/firebaseApi';
 
 export interface AuthState {
    isLoggedIn: boolean;
-   user?: any /*TODO*/;
+   user?: UserModel;
 }
 
 const Auth_INITIAL_STATE: AuthState = {
@@ -46,6 +46,18 @@ const AuthProvider = ({ children }: Props) => {
       dispatch({ type: 'Auth - Logout' });
    };
 
+   const register = async (email: string, password: string, name: string) => {
+      const data = await signUp(email, password, name);
+      if (!data.error) {
+         await signWithNext('credentials', {
+            email,
+            password,
+         });
+         dispatch({ type: 'Auth - Login', payload: data.data });
+      }
+      return data;
+   };
+
    const AuthMemo = useMemo(
       () => ({
          ...state,
@@ -53,6 +65,7 @@ const AuthProvider = ({ children }: Props) => {
          // Methods
          login,
          logout,
+         register,
       }),
       [state]
    );

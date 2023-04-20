@@ -58,7 +58,7 @@ const PlantSlug = ({ plant }: { plant: Plant }) => {
                   />
                   <Box>
                      <Link
-                        href={`/authors/${plant.author?.sys?.id}`}
+                        href={`/main/authors/${plant.author?.sys?.id}`}
                         style={{
                            color: 'inherit',
                         }}

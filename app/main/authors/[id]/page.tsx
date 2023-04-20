@@ -2,9 +2,9 @@ import React from 'react';
 import {
    getAuthorById,
    getAuthorIds,
-} from '@/app/authors/services/author.service';
+} from '@/app/main/authors/services/author.service';
 import { redirect } from 'next/navigation';
-import AuthorComponent from '@/app/authors/[id]/Author';
+import AuthorComponent from '@/app/main/authors/[id]/Author';
 import { Author } from '@/graphql/generated/schema';
 
 interface Props {
@@ -26,7 +26,7 @@ const AuthorPage = async ({ params: { id } }: { params: Props }) => {
    const author = data?.author;
 
    if (!author) {
-      redirect('/');
+      redirect('/main');
    }
 
    return <AuthorComponent author={author as Author} />;

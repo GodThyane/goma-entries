@@ -97,7 +97,7 @@ const AuthorComponent = ({ author }: { author: Author }) => {
                      <CustomScrollbar>
                         {data?.plantCollection?.items?.map((plant) => (
                            <Link
-                              href={`/plants/${plant?.slug}`}
+                              href={`/main/plants/${plant?.slug}`}
                               key={plant?.sys.id}
                               style={{
                                  color: 'inherit',

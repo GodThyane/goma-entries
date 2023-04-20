@@ -1,12 +1,20 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Box, Button, Chip, Grid, TextField, Typography } from '@mui/material';
+import {
+   Box,
+   Button,
+   Chip,
+   CircularProgress,
+   Grid,
+   TextField,
+   Typography,
+} from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { signUp } from '@/api/firebaseApi';
 import { ErrorOutline } from '@mui/icons-material';
 import Link from 'next/link';
+import { AuthContext } from '@/context/auth';
 
 type FormData = {
    name: string;
@@ -16,9 +24,11 @@ type FormData = {
 
 const Register = () => {
    const searchParams = useSearchParams();
+   const { register: registerC } = useContext(AuthContext);
 
    const [showError, setShowError] = useState(false);
    const [errorMessage, setErrorMessage] = useState('');
+   const [loading, setLoading] = useState(false);
 
    const {
       register,
@@ -27,9 +37,16 @@ const Register = () => {
    } = useForm<FormData>();
 
    const onRegister = async ({ name, email, password }: FormData) => {
-      setShowError(false);
-      const res = await signUp(email, password, name);
-      console.log({ res });
+      setLoading(true);
+      const { error } = await registerC(email, password, name);
+      setLoading(false);
+      if (error) {
+         setShowError(true);
+         setErrorMessage(error.message);
+         setTimeout(() => {
+            setShowError(false);
+         }, 3000);
+      }
    };
 
    return (
@@ -45,20 +62,26 @@ const Register = () => {
                      color="error"
                      icon={<ErrorOutline />}
                      className="fadeIn"
-                     sx={{ display: showError ? 'flex' : 'none' }}
+                     sx={{ display: showError ? 'flex' : 'none', marginTop: 1 }}
                   />
                </Grid>
                <Grid item xs={12}>
                   <TextField
-                     label="Nombre"
+                     label="Nombre de usuario"
                      variant="filled"
                      fullWidth
                      {...register('name', {
-                        required: 'El nombre es requerido',
+                        required: 'El nombre de usuario es requerido',
                         minLength: {
                            value: 3,
                            message:
-                              'El nombre debe tener al menos 3 caracteres',
+                              'El nombre de usuario debe tener al menos 3 caracteres',
+                        },
+                        pattern: {
+                           // No puede contener espacios, ni caracteres especiales, pero si guiones, tildes y ñ
+                           value: /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ_-]*$/,
+                           message:
+                              'El nombre de usuario no puede contener espacios, ni caracteres especiales.',
                         },
                      })}
                      error={!!errors.name}
@@ -108,8 +131,13 @@ const Register = () => {
                      className="circular-btn"
                      size="large"
                      fullWidth
+                     disabled={loading || showError}
                   >
-                     Registrarse
+                     {loading ? (
+                        <CircularProgress thickness={1} size={25} />
+                     ) : (
+                        'Registrarse'
+                     )}
                   </Button>
                </Grid>
                <Grid item xs={12} display="flex" justifyContent="end">
