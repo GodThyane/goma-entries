@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Plant } from '@/graphql/generated/schema';
 import {
    Box,
@@ -13,8 +13,24 @@ import {
 } from '@mui/material';
 import { Excerpt } from '@/components/ui/Excerpt';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import Like from '@/components/like/Like';
 
-const PlantSlug = ({ plant }: { plant: Plant }) => {
+export interface Props {
+   plant: Plant;
+}
+
+const PlantSlug = ({ plant }: Props) => {
+   const { data, status } = useSession();
+   const [authorId, setAuthorId] = useState<string | null>(null);
+
+   useEffect(() => {
+      if (status === 'authenticated') {
+         const user = data?.user as UserModel;
+         setAuthorId(user.uid);
+      }
+   }, [data, status]);
+
    return (
       <Grid container spacing={3}>
          <Grid item xs={12} sm={7}>
@@ -46,16 +62,24 @@ const PlantSlug = ({ plant }: { plant: Plant }) => {
                   sx={{ mt: 2, display: 'flex' }}
                   justifyContent="space-between"
                >
-                  <Chip
-                     sx={{
-                        backgroundColor: plant.category?.color,
-                        color: plant.category?.slug?.includes('indoor')
-                           ? '#fff'
-                           : '#000',
-                     }}
-                     label={plant.category?.title}
-                     size="small"
-                  />
+                  <Box display="flex" alignItems="center">
+                     <Chip
+                        sx={{
+                           backgroundColor: plant.category?.color,
+                           color: plant.category?.slug?.includes('indoor')
+                              ? '#fff'
+                              : '#000',
+                           marginRight: '0.5rem',
+                        }}
+                        label={plant.category?.title}
+                        size="small"
+                     />
+                     <Like
+                        postId={plant.sys.id}
+                        userId={authorId}
+                        color={plant.category?.color || 'red'}
+                     />
+                  </Box>
                   <Box>
                      <Link
                         href={`/main/authors/${plant.author?.sys?.id}`}
@@ -73,7 +97,6 @@ const PlantSlug = ({ plant }: { plant: Plant }) => {
                      </Link>
                   </Box>
                </Box>
-
                {/*Cantidad*/}
                <Box sx={{ mt: 3 }}>
                   <Typography variant="subtitle2">Description</Typography>

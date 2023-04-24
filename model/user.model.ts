@@ -1,13 +1,14 @@
 interface UserModel {
    uid: string;
-   name: string;
+   username: string;
    email: string;
    role: string;
    entries?: any[];
 }
 
 interface UserCreateModel {
-   name: string;
+   username: string;
    email: string;
    role: string;
+   uid: string;
 }

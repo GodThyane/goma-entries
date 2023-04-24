@@ -30,12 +30,12 @@ export const signUp: (
 ) => Promise<{
    data: UserModel | null;
    error: { code: number; message: string } | null;
-}> = async (email: string, password: string, name: string) => {
+}> = async (email: string, password: string, username: string) => {
    const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.NEXT_PUBLIC_FIREBASE_API_KEY}`;
 
    try {
       // Validar que el name no este en uso
-      const { data: user } = await getUserByName(name);
+      const { data: user } = await getUserByName(username);
       if (user) {
          return {
             data: null,
@@ -54,9 +54,10 @@ export const signUp: (
 
       return await addUser(
          {
-            name,
+            username,
             email,
             role: 'client',
+            uid: data.localId,
          },
          data.localId
       );
@@ -168,6 +169,7 @@ export const getUser = async (id: string, removeEntries: boolean = true) => {
       }
 
       const user = docRef.data() as UserModel;
+      user.uid = id;
       if (removeEntries) delete user.entries;
       return {
          data: user,

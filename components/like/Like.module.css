@@ -1,0 +1,24 @@
+.count {
+    transform: translate3d(0px, 0px, 0px);
+    transition-property: transform;
+    transition-duration: 0.1s;
+    z-index: -1;
+}
+
+.slide-down {
+    transform: translate3d(0px, -100%, 0px);
+}
+
+.slide-up {
+    transform: translate3d(0px, 100%, 0px);
+}
+
+.slide-normal-up {
+    transform: translate3d(0px, -100%, 0px);
+    transition-duration: 0s;
+}
+
+.slide-normal-down {
+    transform: translate3d(0px, 100%, 0px);
+    transition-duration: 0s;
+}
