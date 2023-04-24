@@ -16,7 +16,6 @@ import {
    ListSubheader,
 } from '@mui/material';
 import {
-   AccountCircleOutlined,
    AdminPanelSettings,
    CategoryOutlined,
    ConfirmationNumberOutlined,
@@ -64,12 +63,12 @@ const SideMenu = ({ categories }: Props) => {
       if (e.key === 'Enter') onSearchTerm();
    };
 
-   const notShowWhenNotLoggedIn = useMemo(
+   /*const notShowWhenNotLoggedIn = useMemo(
       () => ({
          display: isLoggedIn ? '' : 'none',
       }),
       [isLoggedIn]
-   );
+   );*/
 
    const notShowWhenNotAdmin = useMemo(
       () => ({
@@ -110,7 +109,7 @@ const SideMenu = ({ categories }: Props) => {
                   />
                </ListItem>
 
-               <Box sx={notShowWhenNotLoggedIn}>
+               {/*<Box sx={notShowWhenNotLoggedIn}>
                   <ListItemButton>
                      <ListItemIcon>
                         <AccountCircleOutlined />
@@ -124,7 +123,7 @@ const SideMenu = ({ categories }: Props) => {
                      </ListItemIcon>
                      <ListItemText primary={'Mis Ordenes'} />
                   </ListItemButton>
-               </Box>
+               </Box>*/}
 
                <Box sx={{ display: { xs: '', sm: '', md: 'none' } }}>
                   {categories.map((category) => (
