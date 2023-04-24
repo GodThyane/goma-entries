@@ -5,7 +5,7 @@ import {
    GetPlantsWithAuthorsQuery,
 } from '@/graphql/generated/schema';
 import apolloClient from '@/graphql/apolloClient';
-import { createPlants, createUsers, deleteUsers } from '@/api/firebaseAdminApi';
+import { createPlants, createUsers, deleteUsers } from '@/firebaseapi/firebaseAdminApi';
 
 export async function POST(request: Request) {
    // Eliminar usuarios de Firebase Auth y Firebase Storage

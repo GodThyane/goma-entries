@@ -302,7 +302,7 @@ input ContentfulMetadataTagsFilter {
 
 """
 Represents a tag entity for finding and organizing content easily.
-    Find out more here: https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/content-tags
+    Find out more here: https://www.contentful.com/developers/docs/references/content-delivery-firebaseapi/#/reference/content-tags
 """
 type ContentfulTag {
   id: String

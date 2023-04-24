@@ -3,7 +3,7 @@
 import React, { useReducer, useMemo, useEffect } from 'react';
 import { AuthContext, authReducer } from './';
 import { useSession, signIn as signWithNext, signOut } from 'next-auth/react';
-import { signIn, signUp } from '@/api/firebaseApi';
+import { signIn, signUp } from '@/firebaseapi/firebaseApi';
 
 export interface AuthState {
    isLoggedIn: boolean;

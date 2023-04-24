@@ -1,7 +1,7 @@
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 import Credentials from 'next-auth/providers/credentials';
-import { oauthSignUp, signIn } from '@/api/firebaseApi';
+import { oauthSignUp, signIn } from '@/firebaseapi/firebaseApi';
 
 export const authOptions: NextAuthOptions = {
    pages: {
