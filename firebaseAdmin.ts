@@ -2,11 +2,9 @@ import { ServiceAccount } from 'firebase-admin';
 
 const admin = require('firebase-admin');
 
-const serviceAccount: ServiceAccount = {
-   clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-   privateKey: process.env.FIREBASE_PRIVATE_KEY,
-   projectId: process.env.FIREBASE_PROJECT_ID,
-};
+const serviceAccount = JSON.parse(
+   process.env.FIREBASE_SERVICE_ACCOUNT_KEY as string
+) as ServiceAccount;
 
 export const firebaseAdmin =
    admin.apps.length === 0
