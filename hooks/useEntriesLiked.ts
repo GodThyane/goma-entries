@@ -10,7 +10,7 @@ export const useEntriesLiked = (userId: string | null = null) => {
 
    const entries = data
       ?.flat()
-      .map((entry) => entry)
+      .map((entry) => entry.postId)
       .flat() as string[];
 
    const [plants, setPlants] = useState<Plant[]>([]);
@@ -19,6 +19,20 @@ export const useEntriesLiked = (userId: string | null = null) => {
       const fetchPlants = async () => {
          if (!entries || entries.length === 0) return;
          const plants = await fetchEntriesFromContentFul(entries);
+         // Sort by createdDate (From data)
+         plants.sort((a, b) => {
+            const aDate = data?.find((entry) => entry.postId === a.sys.id) as {
+               postId: string;
+               createdAt: any;
+            };
+            const bDate = data?.find((entry) => entry.postId === b.sys.id) as {
+               postId: string;
+               createdAt: any;
+            };
+
+            return bDate.createdAt - aDate.createdAt;
+         });
+
          setPlants(plants);
       };
       fetchPlants();
@@ -106,7 +120,10 @@ const fetchEntriesFromFirebase = async (userId: string | null) => {
    );
 
    const snapshot = await getDocs(likesRef);
-   return snapshot.docs.map((doc) => doc.data().postId) as string[];
+   return snapshot.docs.map((doc) => ({
+      postId: doc.data().postId,
+      createdAt: doc.data().createdAt,
+   }));
 };
 
 /*const fetchEntriesFromFirebase = async (resKey: {
