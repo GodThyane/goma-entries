@@ -1,0 +1,15 @@
+.myEditor .public-DraftStyleDefault-block {
+    margin: 0.1em 0;
+}
+
+.myEditor .rdw-editor-main {
+    background-color: rgba(0, 0, 0, 0.06);
+    height: 10.6em;
+    overflow: auto;
+    padding: 0.8em;
+    font-size: 0.9rem;
+}
+
+.myEditor .DraftEditor-root {
+    height: auto;
+}

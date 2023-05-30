@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import Loading from '@/components/ui/Loading';
 import { usePlantsInfinite } from '@/hooks/usePlants';
-import { Button } from '@mui/material';
+import { Box, Button, Modal } from '@mui/material';
 import PlantList from '@/components/plants/PlantList';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import PlantListSkeleton from '@/components/skeleton/plant/PlantList';
@@ -13,6 +13,19 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useEntriesLiked } from '@/hooks/useEntriesLiked';
 import AddIcon from '@mui/icons-material/Add';
 import { AuthContext } from '@/context/auth';
+import CreateEntry from '@/components/plants/CreateEntry/CreateEntry';
+
+const style = {
+   position: 'absolute' as 'absolute',
+   top: '50%',
+   left: '50%',
+   transform: 'translate(-50%, -50%)',
+   width: 600,
+   bgcolor: 'background.paper',
+   boxShadow: 24,
+   p: 4,
+   outline: 0,
+};
 
 const PlantListOne = (
    isLoadingInitialData: boolean,
@@ -54,6 +67,10 @@ const PlantListLiked = (isLoading: boolean, plants: Plant[]) => {
 };
 
 const Home = () => {
+   const [open, setOpen] = React.useState(false);
+   const handleOpen = () => setOpen(true);
+   const handleClose = () => setOpen(false);
+
    const {
       plants,
       size,
@@ -119,10 +136,22 @@ const Home = () => {
                variant="outlined"
                startIcon={<AddIcon />}
                sx={{ mt: 2 }}
+               onClick={handleOpen}
             >
                Crear entrada
             </Button>
          </CustomTab>
+         <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+         >
+            {/*<CreateEntry />*/}
+            <Box sx={style}>
+               <CreateEntry />
+            </Box>
+         </Modal>
       </>
       /*<>
          <Typography variant="h1">Entries of Plants</Typography>
