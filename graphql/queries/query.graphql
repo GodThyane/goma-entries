@@ -239,3 +239,24 @@ query GetPlantsWithAuthors {
         }
     }
 }
+
+query GetPlantsByIds($ids: [String]) {
+    plantCollection(where: {sys: {id_in: $ids}}) {
+        total
+        items {
+            plantName
+            image {
+                url
+            }
+            slug
+            category {
+                title
+                color
+                slug
+            }
+            sys {
+                id
+            }
+        }
+    }
+}

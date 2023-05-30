@@ -9,7 +9,13 @@ export const useInfiniteScroll = (
    size: number
 ) => {
    useEffect(() => {
+      console.log({
+         isLoadingMore,
+         isReachingEnd,
+         size,
+      });
       const handleLoadMore = () => {
+         console.log('handleLoadMore');
          setSize(size + 1);
       };
       const handleScroll = () => {

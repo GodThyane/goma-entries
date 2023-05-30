@@ -59,7 +59,7 @@ const Navbar = ({ categories }: Props) => {
       <AppBar>
          <Toolbar>
             <Link
-               href="/"
+               href="/main"
                passHref
                style={{
                   color: 'black',

@@ -56,6 +56,10 @@ export const usePlantsInfinite = () => {
    };
 };
 
+export const useEntriesLiked = () => {
+   // Obtener las entradas que le gustan al usuario.
+};
+
 export const usePlantsByCategoryInfinite = (category: string) => {
    const { data, error, size, setSize } =
       useSWRInfinite<GetPlantsByCategoryInfiniteQuery>(

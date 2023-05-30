@@ -2,8 +2,14 @@ import { ApolloQueryResult } from '@apollo/client';
 import {
    GetCategoriesTitleDocument,
    GetCategoriesTitleQuery,
+   GetPlantsByIdsDocument,
+   GetPlantsByIdsQuery,
 } from '@/graphql/generated/schema';
 import apolloClient from '@/graphql/apolloClient';
+
+type Variables = {
+   ids: string[];
+};
 
 type Context = {
    fetchOptions?: {
@@ -24,6 +30,25 @@ export const getCategoriesTitle = async (
 
    return apolloClient.query<GetCategoriesTitleQuery>({
       query: GetCategoriesTitleDocument,
+      context,
+   });
+};
+
+type QueryOptionsTwo = {
+   context?: Context;
+   variables?: Variables;
+};
+
+export const getPlantsByIds = async (
+   options: QueryOptionsTwo = {}
+): Promise<ApolloQueryResult<GetPlantsByIdsQuery | undefined>> => {
+   const { context = {}, variables = {} } = options;
+   const { ids } = variables as Variables;
+   return apolloClient.query<GetPlantsByIdsQuery>({
+      query: GetPlantsByIdsDocument,
+      variables: {
+         ids,
+      },
       context,
    });
 };

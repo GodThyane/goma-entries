@@ -1293,6 +1293,33 @@ export type GetPlantsWithAuthorsQuery = {
    } | null;
 };
 
+export type GetPlantsByIdsQueryVariables = Exact<{
+   ids?: InputMaybe<
+      Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>
+   >;
+}>;
+
+export type GetPlantsByIdsQuery = {
+   __typename?: 'Query';
+   plantCollection?: {
+      __typename?: 'PlantCollection';
+      total: number;
+      items: Array<{
+         __typename?: 'Plant';
+         plantName?: string | null;
+         slug?: string | null;
+         image?: { __typename?: 'Asset'; url?: string | null } | null;
+         category?: {
+            __typename?: 'Category';
+            title?: string | null;
+            color?: string | null;
+            slug?: string | null;
+         } | null;
+         sys: { __typename?: 'Sys'; id: string };
+      } | null>;
+   } | null;
+};
+
 export const GetPlantsDocument = gql`
    query GetPlants {
       plantCollection(limit: 10, skip: 2) {
@@ -2399,4 +2426,79 @@ export type GetPlantsWithAuthorsLazyQueryHookResult = ReturnType<
 export type GetPlantsWithAuthorsQueryResult = Apollo.QueryResult<
    GetPlantsWithAuthorsQuery,
    GetPlantsWithAuthorsQueryVariables
+>;
+export const GetPlantsByIdsDocument = gql`
+   query GetPlantsByIds($ids: [String]) {
+      plantCollection(where: { sys: { id_in: $ids } }) {
+         total
+         items {
+            plantName
+            image {
+               url
+            }
+            slug
+            category {
+               title
+               color
+               slug
+            }
+            sys {
+               id
+            }
+         }
+      }
+   }
+`;
+
+/**
+ * __useGetPlantsByIdsQuery__
+ *
+ * To run a query within a React component, call `useGetPlantsByIdsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPlantsByIdsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPlantsByIdsQuery({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *   },
+ * });
+ */
+export function useGetPlantsByIdsQuery(
+   baseOptions?: Apollo.QueryHookOptions<
+      GetPlantsByIdsQuery,
+      GetPlantsByIdsQueryVariables
+   >
+) {
+   const options = { ...defaultOptions, ...baseOptions };
+   return Apollo.useQuery<GetPlantsByIdsQuery, GetPlantsByIdsQueryVariables>(
+      GetPlantsByIdsDocument,
+      options
+   );
+}
+
+export function useGetPlantsByIdsLazyQuery(
+   baseOptions?: Apollo.LazyQueryHookOptions<
+      GetPlantsByIdsQuery,
+      GetPlantsByIdsQueryVariables
+   >
+) {
+   const options = { ...defaultOptions, ...baseOptions };
+   return Apollo.useLazyQuery<
+      GetPlantsByIdsQuery,
+      GetPlantsByIdsQueryVariables
+   >(GetPlantsByIdsDocument, options);
+}
+
+export type GetPlantsByIdsQueryHookResult = ReturnType<
+   typeof useGetPlantsByIdsQuery
+>;
+export type GetPlantsByIdsLazyQueryHookResult = ReturnType<
+   typeof useGetPlantsByIdsLazyQuery
+>;
+export type GetPlantsByIdsQueryResult = Apollo.QueryResult<
+   GetPlantsByIdsQuery,
+   GetPlantsByIdsQueryVariables
 >;
