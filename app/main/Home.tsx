@@ -147,10 +147,7 @@ const Home = () => {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
          >
-            {/*<CreateEntry />*/}
-            <Box sx={style}>
-               <CreateEntry />
-            </Box>
+            <Box sx={style}>{<CreateEntry />}</Box>
          </Modal>
       </>
       /*<>

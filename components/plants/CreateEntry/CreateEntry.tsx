@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import './CreateEntry.css';
 import { convertToRaw, EditorState } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
+import dynamic from 'next/dynamic'; // Importa 'dynamic' de 'next/dynamic'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { useForm } from 'react-hook-form';
 
@@ -20,10 +20,15 @@ type FormData = {
    description: string;
    category: string;
 };
+
+const Editor = dynamic(
+   () => import('react-draft-wysiwyg').then((module) => module.Editor),
+   { ssr: false } // Este módulo se cargará solo en el lado del cliente
+);
+
 const CreateEntry = () => {
    const [editorState, setEditorState] = useState(EditorState.createEmpty());
    const [loading, setLoading] = useState(false);
-
    const {
       register,
       handleSubmit,
