@@ -178,7 +178,9 @@ const CreateEntry = () => {
                               <CardMedia
                                  component="img"
                                  className="fadeIn"
-                                 image={URL.createObjectURL(getValues('cover') as File)}
+                                 image={URL.createObjectURL(
+                                    getValues('cover') as File
+                                 )}
                                  alt="cover"
                                  style={{
                                     width: '100%',
